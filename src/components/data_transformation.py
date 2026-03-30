@@ -20,6 +20,7 @@ from dataclasses import dataclass
 @dataclass
 class DataTransformationConfig:
     preprocessor_file_obj_path = os.path.join('artifacts','preprocessor.pkl')
+    label_encoder_file_obj_path = os.path.join('artifacts','label_encoder.pkl')
 
 class DataTransformation:
     def __init__(self):
@@ -41,8 +42,10 @@ class DataTransformation:
                 ('cat_transform',OneHotEncoder(drop='first',sparse_output=False),cat_cols),
                 ('scaler',StandardScaler(),num_cols)
             ],remainder='passthrough')
+
+            Label_encoder = LabelEncoder()
             
-            return preprocessor
+            return preprocessor, Label_encoder
             
         
         except Exception as e:
@@ -57,25 +60,26 @@ class DataTransformation:
            
 
             train_set_input_features = train_set.drop(columns=['risk'])
-            logging.info(train_set_input_features)
+        
             train_set_output_feature = train_set['risk']
-            logging.info(train_set_output_feature)
-
+            
             test_set_input_features = test_set.drop(columns=['risk'])
-            logging.info(test_set_input_features)
-
             test_set_output_feature = test_set['risk']
-            logging.info(test_set_output_feature)
 
-            preprocessor_obj = self.get_data_transformer_object()
+            preprocessor_obj,label_encoder_obj = self.get_data_transformer_object()
 
             train_input_arr = preprocessor_obj.fit_transform(train_set_input_features)
             test_input_arr = preprocessor_obj.transform(test_set_input_features)
 
-            train_arr = np.c_[train_input_arr, train_set_output_feature.values.reshape(-1, 1)]
-            test_arr = np.c_[test_input_arr,test_set_output_feature.values.reshape(-1, 1)]
+            train_label_encoder_arr = label_encoder_obj.fit_transform(train_set_output_feature)
+            test_label_encoder_arr = label_encoder_obj.transform(test_set_output_feature)
+
+            train_arr = np.c_[train_input_arr,train_label_encoder_arr]
+            test_arr = np.c_[test_input_arr,test_label_encoder_arr]
 
             save_obj(self.data_transformation_config.preprocessor_file_obj_path,preprocessor_obj)
+
+            save_obj(self.data_transformation_config.label_encoder_file_obj_path,label_encoder_obj)
 
             return (
                 train_arr,test_arr,self.data_transformation_config.preprocessor_file_obj_path
@@ -85,18 +89,4 @@ class DataTransformation:
             raise CustomException(e,sys)
         
 
-if __name__ == '__main__':
-    data_ingestion_obj = DataIngestion()
-    train_data , test_data = data_ingestion_obj.initiate_data_ingestion()
-    
-    data_transformation = DataTransformation()
-    data_transformation.initiate_data_transformation(train_data,test_data)
 
-
-
-
-
-
-
-    
-    

@@ -22,7 +22,7 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         try:
             logging.info('Data ingestion started')
-            df = pd.read_csv('notebook/border_surveillance_dataset.csv')
+            df = pd.read_csv('notebook/border_dataset_realistic_1500.csv')
             os.makedirs(self.IngestionConfig.artifact_path,exist_ok=True)
 
             logging.info('Read Dataset As DataFrame')
