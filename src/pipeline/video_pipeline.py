@@ -1,5 +1,7 @@
 import os
 os.environ["YOLO_VERBOSE"] = "False"
+os.environ["ULTRALYTICS_CACHE_DIR"] = "/tmp"
+
 
 from ultralytics import YOLO
 import cv2
@@ -10,17 +12,18 @@ import pandas as pd
 from src.utils import get_zone, get_zone_lines, get_time_of_day, calculate_speed
 
 
+
 class VideoPipeline:
 
     def __init__(self):
-        # ------------------ LOAD MODELS ------------------
-        self.yolo = YOLO("yolov8n.pt")
+        self.yolo = YOLO("yolov8n.pt")  # auto-download safe
+
         self.ml_model = joblib.load("artifacts/model.pkl")
         self.label_encoder = joblib.load("artifacts/label_encoder.pkl")
         self.preprocessor = joblib.load("artifacts/preprocessor.pkl")
 
         print("✅ Models loaded")
-
+        
     def run(self, video_path):
 
         # ------------------ VIDEO ------------------
