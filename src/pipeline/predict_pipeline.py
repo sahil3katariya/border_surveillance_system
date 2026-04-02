@@ -20,19 +20,48 @@ class Predict_pipeline:
         except Exception as e:
             raise CustomException(e, sys)
 
+    # def predict(self, data: dict):
+    #     try:
+    #         df = pd.DataFrame([data])
+
+            
+
+    #         preprocessor_out = self.preprocessor.transform(df)
+            
+    #         ml_model_out = self.ml_model.predict(preprocessor_out)
+    #         ml_model_out =  ml_model_out.astype(int)
+    #         label_encoder_out = self.label_encoder.inverse_transform(ml_model_out)
+
+    #         return label_encoder_out[0]
+
+    #     except Exception as e:
+    #         raise CustomException(e, sys)
     def predict(self, data: dict):
         try:
+            # -------- CREATE DF --------
             df = pd.DataFrame([data])
 
-            
+            # -------- FIX FORMAT --------
+            df["object"] = df["object"].str.lower()
+            df["time"] = df["time"].str.lower()
+            df["zone"] = df["zone"].str.upper()
 
+            # -------- ORDER --------
+            df = df[["object", "time", "zone", "speed"]]
+
+            print("INPUT:", df)
+
+            # -------- TRANSFORM --------
             preprocessor_out = self.preprocessor.transform(df)
-            
-            ml_model_out = self.ml_model.predict(preprocessor_out)
-            ml_model_out =  ml_model_out.astype(int)
-            label_encoder_out = self.label_encoder.inverse_transform(ml_model_out)
 
-            return label_encoder_out[0]
+            # -------- PREDICT --------
+            pred = self.ml_model.predict(preprocessor_out)
+
+            # -------- DECODE --------
+            result = self.label_encoder.inverse_transform(pred.astype(int))
+
+            return result[0]
 
         except Exception as e:
+            print("ERROR:", e)   # 🔥 VERY IMPORTANT
             raise CustomException(e, sys)
