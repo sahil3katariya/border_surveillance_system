@@ -24,11 +24,15 @@ class Predict_pipeline:
         try:
             df = pd.DataFrame([data])
 
+            
+
             preprocessor_out = self.preprocessor.transform(df)
+            
             ml_model_out = self.ml_model.predict(preprocessor_out)
+            ml_model_out =  ml_model_out.astype(int)
             label_encoder_out = self.label_encoder.inverse_transform(ml_model_out)
 
-            return label_encoder_out
+            return label_encoder_out[0]
 
         except Exception as e:
             raise CustomException(e, sys)

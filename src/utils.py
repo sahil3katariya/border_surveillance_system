@@ -1,9 +1,9 @@
 import os
 import sys
 import pickle
-import dill
 import datetime
 import math
+import cv2
 
 from src.exception import CustomException
 from src.logger import logging
@@ -76,12 +76,35 @@ def get_zone(cy, line1, line2):
     else:
         return "Z3"
 
+def get_zone_lines(height):
+    line1 = int(height * 0.4)
+    line2 = int(height * 0.75)
+    return line1, line2
 
 # -------- TIME --------
-def get_time_of_day():
-    hour = datetime.datetime.now().hour
-    return "Day" if 6 <= hour <= 18 else "Night"
+# def get_time_of_day():
+#     hour = datetime.datetime.now().hour
+#     return "Day" if 6 <= hour <= 18 else "Night"
 
+# def detect_day_night(frame):
+#     import cv2
+
+#     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+#     brightness = gray.mean()
+
+#     if brightness < 80:
+#         return "Night"
+#     else:
+#         return "Day"
+
+def get_time_of_day(frame):
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    brightness = gray.mean()
+
+    if brightness < 80:
+        return "Night"
+    else:
+        return "Day"
 
 # -------- SPEED --------
 def calculate_speed(track_id, cx, cy, y1, y2, mapped_label, object_tracks, time_diff):
