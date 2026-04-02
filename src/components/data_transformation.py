@@ -30,13 +30,9 @@ class DataTransformation:
         try:
             df = pd.read_csv('notebook/border_surveillance_dataset.csv')
             
-            num_cols = [c for c in df.columns if df[c].dtype != 'object']
+            num_cols = ['speed']
             
-            cat_cols = [c for c in df.columns if df[c].dtype == 'object']
-
-            if 'risk' in cat_cols:
-                cat_cols.remove('risk')
-            
+            cat_cols = ['object','time','zone']
             
             preprocessor = ColumnTransformer([
                 ('cat_transform',OneHotEncoder(drop='first',sparse_output=False),cat_cols),
@@ -82,7 +78,7 @@ class DataTransformation:
             save_obj(self.data_transformation_config.label_encoder_file_obj_path,label_encoder_obj)
 
             return (
-                train_arr,test_arr,self.data_transformation_config.preprocessor_file_obj_path
+                train_arr,test_arr,self.data_transformation_config.preprocessor_file_obj_path,self.data_transformation_config.label_encoder_file_obj_path
             )
     
         except Exception as e:

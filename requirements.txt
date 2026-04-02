@@ -5,4 +5,8 @@ scikit-learn
 dill
 catboost
 xgboost
+streamlit 
+ultralytics
+opencv-python
+joblib
 -e .
