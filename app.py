@@ -54,72 +54,69 @@ def show_video(video_bytes):
         )
 
 
-# def video_mode():
-#     st.subheader("🎥 Video Analysis")
-#     st.markdown("<br>", unsafe_allow_html=True)
+def video_mode():
+    st.subheader("🎥 Video Analysis")
+    st.markdown("<br>", unsafe_allow_html=True)
 
-#     uploaded_file = st.file_uploader("Upload Video", type=["mp4"])
+    uploaded_file = st.file_uploader("Upload Video", type=["mp4"])
 
-#     if uploaded_file:
+    if uploaded_file:
 
-#         st.success("✅ Video uploaded successfully")
-#         st.markdown("<br>", unsafe_allow_html=True)
+        st.success("✅ Video uploaded successfully")
+        st.markdown("<br>", unsafe_allow_html=True)
 
-#         # -------- READ VIDEO --------
-#         video_bytes = uploaded_file.read()
+        # -------- READ VIDEO --------
+        video_bytes = uploaded_file.read()
 
-#         # -------- DISPLAY VIDEO --------
-#         show_video(video_bytes)
+        # -------- DISPLAY VIDEO --------
+        show_video(video_bytes)
 
-#         st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("<br>", unsafe_allow_html=True)
 
-#         # -------- SAVE TEMP FILE --------
-#         tfile = tempfile.NamedTemporaryFile(delete=False)
-#         tfile.write(video_bytes)
+        # -------- SAVE TEMP FILE --------
+        tfile = tempfile.NamedTemporaryFile(delete=False)
+        tfile.write(video_bytes)
 
-#         # -------- RUN PIPELINE --------
-#         with st.spinner("🔍 Running YOLO Detection..."):
-#             pipeline = VideoPipeline()
-#             result = pipeline.run(tfile.name)
+        # -------- RUN PIPELINE --------
+        with st.spinner("🔍 Running YOLO Detection..."):
+            pipeline = VideoPipeline()
+            result = pipeline.run(tfile.name)
 
-#         # -------- OUTPUT --------
-#         st.subheader("📊 Detection Output")
+        # -------- OUTPUT --------
+        st.subheader("📊 Detection Output")
 
-#         if result:
-#             col1, col2 = st.columns(2)
+        if result:
+            col1, col2 = st.columns(2)
 
-#             with col1:
-#                 st.metric("Object", result["object"])
-#                 st.metric("Zone", result["zone"])
+            with col1:
+                st.metric("Object", result["object"])
+                st.metric("Zone", result["zone"])
 
-#             with col2:
-#                 st.metric("Speed", round(result["speed"], 2))
-#                 st.metric("Time", result["time"])
+            with col2:
+                st.metric("Speed", round(result["speed"], 2))
+                st.metric("Time", result["time"])
 
-#             # -------- ML --------
-#             st.markdown("<br>", unsafe_allow_html=True)
-#             st.subheader("🧠 Risk Analysis")
+            # -------- ML --------
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.subheader("🧠 Risk Analysis")
 
-#             predictor = Predict_pipeline()
-#             risk = predictor.predict(result)
+            predictor = Predict_pipeline()
+            risk = predictor.predict(result)
 
-#             # -------- ALERT --------
-#             st.markdown("<br>", unsafe_allow_html=True)
-#             st.subheader("🚨 Final Alert")
+            # -------- ALERT --------
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.subheader("🚨 Final Alert")
 
-#             if risk == "High":
-#                 st.error("🚨 HIGH RISK DETECTED!")
-#             elif risk == "Medium":
-#                 st.warning("⚠️ MEDIUM RISK")
-#             else:
-#                 st.success("✅ LOW RISK")
+            if risk == "High":
+                st.error("🚨 HIGH RISK DETECTED!")
+            elif risk == "Medium":
+                st.warning("⚠️ MEDIUM RISK")
+            else:
+                st.success("✅ LOW RISK")
 
-#         else:
-#             st.info("No significant detection found")
+        else:
+            st.info("No significant detection found")
 
-# TEMP FIX FOR DEPLOYMENT
-st.warning("⚠️ Video detection temporarily disabled due to server limitations.")
-st.stop()
 
 
 # =========================================================
