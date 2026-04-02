@@ -1,12 +1,10 @@
 pandas 
 numpy 
-seaborn 
 scikit-learn
-dill
 catboost
 xgboost
 streamlit 
 ultralytics
-opencv-python
+opencv-python-headless
 joblib
 -e .
