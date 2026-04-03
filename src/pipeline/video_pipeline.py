@@ -18,9 +18,7 @@ class VideoPipeline:
     def __init__(self):
         self.yolo = YOLO("yolov8n.pt")  # auto-download safe
 
-        self.ml_model = joblib.load("artifacts/model.pkl")
-        self.label_encoder = joblib.load("artifacts/label_encoder.pkl")
-        self.preprocessor = joblib.load("artifacts/preprocessor.pkl")
+        
 
         print("✅ Models loaded")
         
