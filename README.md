@@ -1,4 +1,3 @@
-
 # BORDER SURVEILLANCE SYSTEM
 
 ## 📸 Project Output
