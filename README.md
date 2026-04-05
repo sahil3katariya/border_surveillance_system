@@ -3,17 +3,17 @@
 
 ## 📸 Project Output
 
-### 🛰️ Detection Output
+### 🛰️ Home Page
 ![Detection](Screenshot%202026-04-05%20120228.png)
 
-### 🚨 Alert System
+### 🚨 Upload Video
 ![Alert](Screenshot%202026-04-05%20120237.png)
 
-### 📊 Analysis Result
+### 📊 Show Video on Screen
 ![Analysis](Screenshot%202026-04-05%20120344.png)
 
-### 📍 Tracking View
+### 📍 ML predictions and YOLO predictions and Alert
 ![Tracking](Screenshot%202026-04-05%20120403.png)
 
-### 🖥️ Dashboard
+### 🖥️ Manual Prediction Using Data
 ![Dashboard](Screenshot%202026-04-05%20120423.png)
