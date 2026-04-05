@@ -4,7 +4,7 @@
 ## 📸 Project Output
 
 ### 🛰️ Home Page
-![Detection](Screenshot%202026-04-05%20120228.png)
+![Detection](images\Screenshot%202026-04-05%20120228.png)
 
 ### 🚨 Upload Video
 ![Alert](Screenshot%202026-04-05%20120237.png)
